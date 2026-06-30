@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: job-tracker-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: jobtrackerdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: job-tracker-backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: mysql
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      JWT_SECRET: "my-super-secret-jwt-key-for-docker-change-in-prod"
+      ALLOWED_ORIGINS: "http://localhost:3000"
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend
+    container_name: job-tracker-frontend
+    depends_on:
+      - backend
+    environment:
+      REACT_APP_API_URL: http://localhost:8080/api
+    ports:
+      - "3000:80"
+
+volumes:
+  mysql_data:
