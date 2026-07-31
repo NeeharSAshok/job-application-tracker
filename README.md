@@ -81,7 +81,7 @@ docker compose up --build
 
 - Frontend → `http://localhost:3000`
 - Backend API → `http://localhost:8080`
-- MySQL → `localhost:3306`
+- MySQL → `localhost:3306` 
 
 ---
 
