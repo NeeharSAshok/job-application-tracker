@@ -166,7 +166,7 @@ job-application-tracker/
 
 ---
 
-## 👤 Author
+## 👤 Neehar S Ashok
 
 **Neehar S Ashok**
 - GitHub: [github.com/NeeharSAshok](https://github.com/NeeharSAshok)
